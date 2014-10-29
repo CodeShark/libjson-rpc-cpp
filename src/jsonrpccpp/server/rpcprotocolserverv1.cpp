@@ -49,9 +49,7 @@ bool RpcProtocolServerV1::ValidateRequestFields(const Json::Value &request)
 {
     if (!(request.isMember(KEY_REQUEST_METHODNAME) && request[KEY_REQUEST_METHODNAME].isString()))
         return false;
-    if (!request.isMember(KEY_REQUEST_ID))
-        return false;
-    if (!request.isMember(KEY_REQUEST_PARAMETERS))
+    if (request.isMember(KEY_REQUEST_ID) && !(request[KEY_REQUEST_ID].isInt() || request[KEY_REQUEST_ID].isString() || request[KEY_REQUEST_ID].isNull()))
         return false;
     if (!( request[KEY_REQUEST_PARAMETERS].isArray() || request[KEY_REQUEST_PARAMETERS].isNull()))
         return false;
