@@ -9,10 +9,12 @@
 
 #include "abstractprotocolhandler.h"
 #include <jsonrpccpp/common/errors.h>
+#include <jsonrpccpp/common/exception.h>
 #include <jsoncpp/json/value.h>
 #include <jsoncpp/json/reader.h>
 #include <jsoncpp/json/writer.h>
 #include <map>
+#include <stdexcept>
 
 using namespace jsonrpc;
 using namespace std;
@@ -40,7 +42,14 @@ void AbstractProtocolHandler::HandleRequest(const std::string &request, std::str
 
     if (reader.parse(request, req, false))
     {
-        this->HandleJsonRequest(req, resp);
+        try
+        {
+            this->HandleJsonRequest(req, resp);
+        }
+        catch (const JsonRpcException& e)
+        {
+            this->WrapError(Json::nullValue, e.GetCode(), e.GetMessage(), resp);
+        }
     }
     else
     {
