@@ -23,8 +23,8 @@
 class <stubname> : public jsonrpc::AbstractServer<<stubname>>\n\
 {\n\
     public:\n\
-        <stubname>(jsonrpc::AbstractServerConnector& conn) :\n\
-            jsonrpc::AbstractServer<<stubname>>(conn) \n\
+        <stubname>(jsonrpc::AbstractServerConnector& conn, jsonrpc::serverVersion_t type = jsonrpc::JSONRPC_SERVER_V2) :\n\
+            jsonrpc::AbstractServer<<stubname>>(conn, type) \n\
         {\n\
 <procedurebindings>\n\
         }\n\
